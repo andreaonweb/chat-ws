@@ -9,89 +9,86 @@
                     <div class="gb-power-led"></div>
                     <div class="gb-screen">
 
-<div class="tabs-wrap">
-                                    <button class="global-chat-btn" (click)="openGlobalChat()">🌐 Global</button>
-                                    <div *ngFor="let tab of tabs(); let i = index" class="gb-tab-wrapper">
-                                        <button class="gb-tab-btn"
-                                            [class.active]="i === activeTabIndex()"
-                                            [class.has-new]="tab.hasNewMessages"
-                                            (click)="switchTab(i)">
-                                            {{ tab.label }}
-                                        </button>
-                                        <button class="tab-close-btn" (click)="closeTab(i, $event)">✕</button>
-                                    </div>
-                                </div>
-                                <button class="menu-toggle-btn" (click)="toggleMenu()">☰</button>
-                                <div class="dropdown-menu" *ngIf="showMenu()">
-                                    <button (click)="openGlobalChat()" class="dropdown-item">🌐 Chat Global</button>
-                                    <button (click)="goToCategories()" class="dropdown-item">📂 Elegir categoría</button>
-                                    <button (click)="openCreatePrivateRoom()" class="dropdown-item">🔒 Sala privada</button>
-                                    <button (click)="openJoinModal()" class="dropdown-item">🔑 Unir con codigo</button>
-                                    <button *ngIf="isPrivateRoom" (click)="openInvite(); closeMenu()" class="dropdown-item">📩 Invitar</button>
-                                    <button *ngIf="!isAiMode" (click)="openAiFromMenu()" class="dropdown-item">💬 IA</button>
-                                    <button (click)="logoutFromMenu()" class="dropdown-item exit-item">🚪 Exit</button>
-                                </div>
-                        </div>
-
-                        <div class="gb-empty" *ngIf="tabs().length === 0">
-                            <div class="empty-icon">📭</div>
-                            <p class="empty-title">NO HAY CHATS</p>
-                            <p class="empty-sub">Abre el menú ☰ para seleccionar uno</p>
-                            <button class="empty-join-btn" (click)="openGlobalChat()">🌐 CHAT GLOBAL</button>
-                            <button class="empty-join-btn" (click)="openJoinModal()">🔑 UNIR CON CODIGO</button>
-                        </div>
-                        <div class="gb-layout" *ngIf="activeTab">
-
-                            <div class="gb-messages" #messagesContainer>
-                                <div *ngFor="let msg of activeTab!.messages" [class.system-msg]="msg.type === 'system'"
-                                    [class.own-msg]="msg.username === username"
-                                    [class.ai-msg]="msg.username === '🤖 IA'"
-                                    class="gb-msg">
-                                    <span *ngIf="msg.type === 'message'" class="msg-user">{{ msg.username }}</span>
-                                    <span class="msg-text">{{ msg.text }}</span>
-                                </div>
-                                <div *ngIf="aiLoading" class="gb-msg ai-msg">
-                                    <span class="msg-user">🤖 IA</span>
-                                    <span class="msg-text">Pensando...</span>
-                                </div>
+                        <div class="tabs-wrap">
+                            <button class="global-chat-btn" (click)="openGlobalChat()">🌐 Global</button>
+                            <div *ngFor="let tab of tabs(); let i = index" class="gb-tab-wrapper">
+                                <button class="gb-tab-btn" [class.active]="i === activeTabIndex()"
+                                    [class.has-new]="tab.hasNewMessages" (click)="switchTab(i)">
+                                    {{ tab.label }}
+                                </button>
+                                <button class="tab-close-btn" (click)="closeTab(i, $event)">✕</button>
                             </div>
+                        </div>
+                        <button class="menu-toggle-btn" (click)="toggleMenu()">☰</button>
+                        <div class="dropdown-menu" *ngIf="showMenu()">
+                            <button (click)="openGlobalChat()" class="dropdown-item">🌐 Chat Global</button>
+                            <button (click)="goToCategories()" class="dropdown-item">📂 Elegir categoría</button>
+                            <button (click)="openCreatePrivateRoom()" class="dropdown-item">🔒 Sala privada</button>
+                            <button (click)="openJoinModal()" class="dropdown-item">🔑 Unir con codigo</button>
+                            <button *ngIf="isPrivateRoom" (click)="openInvite(); closeMenu()" class="dropdown-item">📩
+                                Invitar</button>
+                            <button *ngIf="!isAiMode" (click)="openAiFromMenu()" class="dropdown-item">💬 IA</button>
+                            <button (click)="logoutFromMenu()" class="dropdown-item exit-item">🚪 Exit</button>
+                        </div>
+                    </div>
 
-                            <div class="gb-users">
-                                <div class="users-title">ONLINE</div>
-                                <div *ngFor="let u of activeTab!.users" class="gb-user">
-                                    <span class="user-dot">●</span>
-                                    <span class="user-name-item">{{ u }}</span>
-                                </div>
+                    <div class="gb-empty" *ngIf="tabs().length === 0">
+                        <div class="empty-icon">📭</div>
+                        <p class="empty-title">NO HAY CHATS</p>
+                        <p class="empty-sub">Abre el menú ☰ para seleccionar uno</p>
+                        <button class="empty-join-btn" (click)="openGlobalChat()">🌐 CHAT GLOBAL</button>
+                        <button class="empty-join-btn" (click)="openJoinModal()">🔑 UNIR CON CODIGO</button>
+                    </div>
+                    <div class="gb-layout" *ngIf="activeTab">
+
+                        <div class="gb-messages" #messagesContainer>
+                            <div *ngFor="let msg of activeTab!.messages" [class.system-msg]="msg.type === 'system'"
+                                [class.own-msg]="msg.username === username" [class.ai-msg]="msg.username === '🤖 IA'"
+                                class="gb-msg">
+                                <span *ngIf="msg.type === 'message'" class="msg-user">{{ msg.username }}</span>
+                                <span class="msg-text">{{ msg.text }}</span>
                             </div>
-
+                            <div *ngIf="aiLoading" class="gb-msg ai-msg">
+                                <span class="msg-user">🤖 IA</span>
+                                <span class="msg-text">Pensando...</span>
+                            </div>
                         </div>
 
-                        <div class="gb-input-row" *ngIf="activeTab">
-                            <input [(ngModel)]="text" (keyup.enter)="send()"
-                                [placeholder]="isAiMode ? 'PREGUNTA A LA IA...' : 'TYPE MSG...'"
-                                class="gb-input" [disabled]="aiLoading" />
-                            <button (click)="send()" class="gb-send" [disabled]="aiLoading">▶</button>
+                        <div class="gb-users">
+                            <div class="users-title">ONLINE</div>
+                            <div *ngFor="let u of activeTab!.users" class="gb-user">
+                                <span class="user-dot">●</span>
+                                <span class="user-name-item">{{ u }}</span>
+                            </div>
                         </div>
 
                     </div>
-                </div>
 
-                <div class="gb-controls">
-                    <div class="gb-dpad"></div>
-                    <div class="gb-buttons">
-                        <div class="gb-btn-group">
-                            <div class="gb-btn btn-b">B</div>
-                            <div class="gb-btn btn-a">A</div>
-                        </div>
-                        <div class="gb-btn-start">START</div>
+                    <div class="gb-input-row" *ngIf="activeTab">
+                        <input [(ngModel)]="text" (keyup.enter)="send()"
+                            [placeholder]="isAiMode ? 'PREGUNTA A LA IA...' : 'TYPE MSG...'" class="gb-input"
+                            [disabled]="aiLoading" />
+                        <button (click)="send()" class="gb-send" [disabled]="aiLoading">▶</button>
                     </div>
-                </div>
 
-                <div class="gb-speaker">
-                    <div *ngFor="let i of [1,2,3,4,5,6]" class="speaker-hole"></div>
                 </div>
-
             </div>
+
+            <div class="gb-controls">
+                <div class="gb-dpad"></div>
+                <div class="gb-buttons">
+                    <div class="gb-btn-group">
+                        <div class="gb-btn btn-b">B</div>
+                        <div class="gb-btn btn-a">A</div>
+                    </div>
+                    <div class="gb-btn-start">START</div>
+                </div>
+            </div>
+
+            <div class="gb-speaker">
+                <div *ngFor="let i of [1,2,3,4,5,6]" class="speaker-hole"></div>
+            </div>
+
         </div>
     </div>
 </div>
@@ -117,14 +114,14 @@
             <button class="modal-close" (click)="closeInvite()">✕</button>
         </div>
         <div class="invite-modal-body">
-                <p class="invite-success">✅ Sala creada — ya estás dentro en una nueva pestaña</p>
-                <p class="invite-label">Codigo:</p>
-                <div class="invite-link-box">
-                    <input readonly [value]="inviteCode()" class="invite-link-input" />
-                    <button class="invite-copy-btn" (click)="copyInviteCode()">
-                        {{ inviteCopied ? '✓' : 'COPIAR' }}
-                    </button>
-                </div>
+            <p class="invite-success">✅ Sala creada — ya estás dentro en una nueva pestaña</p>
+            <p class="invite-label">Codigo:</p>
+            <div class="invite-link-box">
+                <input readonly [value]="inviteCode()" class="invite-link-input" />
+                <button class="invite-copy-btn" (click)="copyInviteCode()">
+                    {{ inviteCopied ? '✓' : 'COPIAR' }}
+                </button>
+            </div>
 
             <p class="invite-expire">Expira en 24 horas</p>
         </div>
@@ -138,8 +135,7 @@
             <button class="modal-close" (click)="closeJoinModal()">✕</button>
         </div>
         <div class="invite-modal-body">
-            <input [(ngModel)]="joinCode" placeholder="CODIGO" class="invite-link-input"
-                (keyup.enter)="joinByCode()" />
+            <input [(ngModel)]="joinCode" placeholder="CODIGO" class="invite-link-input" (keyup.enter)="joinByCode()" />
             <p *ngIf="joinError()" class="error-msg">{{ joinError() }}</p>
             <button class="invite-copy-btn" style="width:100%; margin-top:8px" (click)="joinByCode()">
                 {{ joinLoading ? '...' : 'UNIR' }}
