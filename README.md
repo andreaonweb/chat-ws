@@ -1,4 +1,4 @@
-# Chat WebSocket
+# Chat WebSocket - BitBuddy
 
 Una aplicación de chat en tiempo real con WebSockets, autenticación Firebase y soporte para IA.
 
