@@ -1,0 +1,130 @@
+<div class="retro-bg">
+    <div class="crt-monitor">
+        <div class="monitor-screen">
+            <div class="scanlines"></div>
+            <div class="login-content">
+                <pre class="ascii-logo">
+ ██████╗██╗  ██╗ █████╗ ████████╗
+██╔════╝██║  ██║██╔══██╗╚══██╔══╝
+██║     ███████║███████║   ██║
+██║     ██╔══██║██╔══██║   ██║
+╚██████╗██║  ██║██║  ██║   ██║
+ ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝
+                </pre>
+
+                <ng-container *ngIf="step() === 'credentials'">
+                    <p class="blink">
+                        {{ isRegister() ? '► CREATE ACCOUNT ◄' : '► INSERT CREDENTIALS ◄' }}
+                    </p>
+                    <input [(ngModel)]="email" placeholder="EMAIL" class="retro-input" type="email" />
+                    <input [(ngModel)]="password" placeholder="PASSWORD" class="retro-input" type="password" />
+                    <p *ngIf="error()" class="error-msg">{{ error() }}</p>
+                    <button (click)="submit()" class="retro-btn">
+                        {{ isRegister() ? '[ REGISTER ]' : '[ LOGIN ]' }}
+                    </button>
+                    <button (click)="toggle()" class="retro-btn-secondary">
+                        {{ isRegister() ? 'Ya tengo cuenta → LOGIN' : 'Nueva cuenta → REGISTER' }}
+                    </button>
+                </ng-container>
+
+                <ng-container *ngIf="step() === 'invite'">
+                    <ng-container *ngIf="inviteLoading()">
+                        <p class="blink">► VALIDATING INVITE... ◄</p>
+                    </ng-container>
+                    <ng-container *ngIf="!inviteLoading() && inviteInfo()">
+                        <p class="blink">► YOU'VE BEEN INVITED! ◄</p>
+                        <p class="subtitle">Unirse a la sala:</p>
+                        <div class="invite-room-display">
+                            <span class="invite-room-name">{{ inviteInfo()!.room | uppercase }}</span>
+                            <span class="invite-by">Invitado por: {{ inviteInfo()!.created_by }}</span>
+                        </div>
+                        <p class="subtitle">Ingresa tus credenciales para unirte</p>
+                        <input [(ngModel)]="email" placeholder="EMAIL" class="retro-input" type="email" />
+                        <input [(ngModel)]="password" placeholder="PASSWORD" class="retro-input" type="password" />
+                        <p *ngIf="error()" class="error-msg">{{ error() }}</p>
+                        <button (click)="submit()" class="retro-btn">[ JOIN ROOM ]</button>
+                        <button (click)="toggle()" class="retro-btn-secondary">
+                            {{ isRegister() ? 'Ya tengo cuenta → LOGIN' : 'Nueva cuenta → REGISTER' }}
+                        </button>
+                    </ng-container>
+                    <ng-container *ngIf="!inviteLoading() && inviteError()">
+                        <p class="error-msg">{{ inviteError() }}</p>
+                        <button (click)="step.set('credentials'); inviteCode.set(null)" class="retro-btn">
+                            [ BACK TO LOGIN ]
+                        </button>
+                    </ng-container>
+                </ng-container>
+
+                <ng-container *ngIf="step() === 'category'">
+                    <p class="blink">► CHOOSE YOUR ROOM ◄</p>
+                    <p class="subtitle">Selecciona tu categoria favorita</p>
+                    <div class="category-grid">
+                        <button *ngFor="let cat of categories" (click)="selectCategory(cat.id)" class="category-btn"
+                            [class.selected]="selectedCategory() === cat.id">
+                            <span class="cat-icon">{{ cat.icon }}</span>
+                            <span class="cat-label">{{ cat.label }}</span>
+                        </button>
+                    </div>
+                    <div class="special-buttons">
+                        <button (click)="selectGlobal()" class="category-btn special-btn global-btn">
+                            <span class="cat-icon">🌐</span>
+                            <span class="cat-label">Chat Global</span>
+                        </button>
+                        <button (click)="selectIa()" class="category-btn special-btn ia-btn">
+                            <span class="cat-icon">💬</span>
+                            <span class="cat-label">Habla con IA</span>
+                        </button>
+                        <button (click)="openPrivateMenu()" class="category-btn special-btn private-btn">
+                            <span class="cat-icon">🔒</span>
+                            <span class="cat-label">Sala privada</span>
+                        </button>
+                    </div>
+                    <p class="subtitle">O también</p>
+                    <div class="global-chat-banner">
+                        <h3>🌐 Chat Global</h3>
+                        <p>Un chat abierto para todos los usuarios</p>
+                        <button (click)="selectGlobal()" class="global-chat-btn">
+                            ENTRAR AL CHAT GLOBAL
+                        </button>
+                    </div>
+                    <p *ngIf="error()" class="error-msg">{{ error() }}</p>
+                </ng-container>
+
+                <ng-container *ngIf="step() === 'private-menu'">
+                    <p class="blink">► PRIVATE ROOM ◄</p>
+                    <p class="subtitle">Crea una sala nueva o unite a una existente</p>
+                    <div class="special-buttons" style="margin-top: 16px">
+                        <button (click)="createPrivateRoom()" class="category-btn special-btn ia-btn">
+                            <span class="cat-icon">➕</span>
+                            <span class="cat-label">Crear sala</span>
+                        </button>
+                        <button (click)="openJoinByCode()" class="category-btn special-btn private-btn">
+                            <span class="cat-icon">🔑</span>
+                            <span class="cat-label">Unir con codigo</span>
+                        </button>
+                    </div>
+                    <p *ngIf="error()" class="error-msg">{{ error() }}</p>
+                    <button (click)="backToCategories()" class="retro-btn-secondary">
+                        ← Volver
+                    </button>
+                </ng-container>
+
+                <ng-container *ngIf="step() === 'private-join'">
+                    <p class="blink">► JOIN WITH CODE ◄</p>
+                    <p class="subtitle">Ingresa el codigo de la sala privada</p>
+                    <input [(ngModel)]="joinCode" placeholder="CODIGO" class="retro-input"
+                        (keyup.enter)="joinByCode()" />
+                    <p *ngIf="joinError()" class="error-msg">{{ joinError() }}</p>
+                    <button (click)="joinByCode()" class="retro-btn" [disabled]="joinLoading">
+                        {{ joinLoading ? '[ UNIENDO... ]' : '[ JOIN ]' }}
+                    </button>
+                    <button (click)="backToCategories()" class="retro-btn-secondary">
+                        ← Volver
+                    </button>
+                </ng-container>
+
+            </div>
+        </div>
+        <div class="monitor-base"></div>
+    </div>
+</div>

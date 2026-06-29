@@ -1,0 +1,4 @@
+<ng-container *ngIf="authService.initialized()">
+    <app-chat *ngIf="authService.currentUser() && authService.roomSelected()" />
+    <app-auth *ngIf="!authService.currentUser() || !authService.roomSelected()" />
+</ng-container>
