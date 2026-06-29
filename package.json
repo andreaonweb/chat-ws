@@ -1,6 +1,3 @@
-// Project configuration and dependencies for the chat-websocket project
-// Including both frontend (Angular) and backend (FastAPI)
-
 {
   "name": "chat-websocket",
   "version": "1.0.0",
