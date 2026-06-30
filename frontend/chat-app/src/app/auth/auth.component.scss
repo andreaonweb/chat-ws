@@ -240,3 +240,92 @@
         }
     }
 }
+
+/* RESPONSIVE */
+@media (max-width: 680px) {
+    .retro-bg {
+        align-items: flex-start;
+    }
+
+    .monitor-screen {
+        width: 100vw !important;
+        height: 100vh !important;
+        border: none !important;
+        border-radius: 0 !important;
+    }
+
+    .monitor-base {
+        display: none;
+    }
+
+    .login-content {
+        padding: 20px 16px;
+        gap: 12px;
+    }
+
+    .ascii-logo {
+        font-size: 5px;
+    }
+
+    .retro-input {
+        width: 100% !important;
+        font-size: 10px;
+        padding: 12px;
+    }
+
+    .retro-btn {
+        font-size: 10px;
+        padding: 14px 24px;
+        width: 100%;
+    }
+
+    .blink {
+        font-size: 7px;
+    }
+
+    .subtitle {
+        font-size: 6px;
+    }
+
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        max-width: 100%;
+    }
+
+    .category-btn {
+        padding: 12px 6px;
+        font-size: 7px;
+
+        .cat-icon {
+            font-size: 16px;
+        }
+
+        .cat-label {
+            font-size: 5px;
+        }
+    }
+
+    .special-buttons {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .special-btn {
+        flex: 1;
+        min-width: calc(50% - 4px);
+        padding: 12px 10px !important;
+    }
+
+    .invite-room-display {
+        padding: 12px 16px;
+    }
+
+    .invite-room-name {
+        font-size: 10px;
+    }
+
+    .invite-by {
+        font-size: 6px;
+    }
+}

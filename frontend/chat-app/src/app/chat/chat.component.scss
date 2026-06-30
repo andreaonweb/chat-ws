@@ -834,3 +834,149 @@ $gb-body: #c8c4a0;
     margin: 0;
     text-align: center;
 }
+
+/* RESPONSIVE */
+@media (max-width: 680px) {
+    .retro-bg {
+        overflow: auto;
+        align-items: flex-start;
+        padding: 0;
+    }
+
+    .gameboy-wrapper {
+        perspective: none;
+    }
+
+    .gameboy {
+        animation: none;
+    }
+
+    .gb-body {
+        width: 100vw;
+        min-height: 100vh;
+        border-radius: 0;
+        padding: 8px;
+        box-shadow: none;
+    }
+
+    .gb-logo {
+        font-size: 5px;
+        margin-bottom: 4px;
+    }
+
+    .gb-screen-bezel {
+        padding: 6px;
+        border-radius: 4px;
+        margin-bottom: 0;
+    }
+
+    .gb-screen {
+        height: calc(100vh - 16px);
+        border-width: 2px;
+    }
+
+    .gb-controls,
+    .gb-speaker {
+        display: none;
+    }
+
+    .gb-tab-btn {
+        font-size: 5px;
+        padding: 6px 7px;
+    }
+
+    .tab-close-btn {
+        font-size: 6px;
+        padding: 6px 4px;
+    }
+
+    .menu-toggle-btn {
+        font-size: 12px;
+        padding: 6px 8px;
+    }
+
+    .gb-users {
+        display: none;
+    }
+
+    .gb-msg .msg-text {
+        font-size: 8px;
+        max-width: 90%;
+    }
+
+    .gb-msg .msg-user {
+        font-size: 7px;
+    }
+
+    .gb-input .gb-input {
+        font-size: 8px;
+        padding: 8px;
+    }
+
+    .gb-send {
+        padding: 0 10px !important;
+        font-size: 12px !important;
+    }
+
+    .gb-empty {
+        padding: 20px;
+
+        .empty-icon {
+            font-size: 24px;
+        }
+
+        .empty-title {
+            font-size: 7px;
+        }
+
+        .empty-sub {
+            font-size: 6px;
+        }
+    }
+
+    .dropdown-menu {
+        min-width: 160px;
+    }
+
+    .dropdown-item {
+        font-size: 6px;
+        padding: 8px 10px;
+    }
+
+    .modal-overlay {
+        padding: 16px;
+    }
+
+    .invite-modal {
+        width: 100%;
+        max-width: 100%;
+        max-height: 90vh;
+    }
+
+    .categories-modal {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .categories-modal-body {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+
+    .category-option {
+        padding: 10px 6px;
+        font-size: 7px;
+
+        .cat-label {
+            font-size: 6px;
+        }
+    }
+
+    .invite-link-box {
+        flex-direction: column;
+    }
+
+    .invite-copy-btn {
+        width: 100%;
+    }
+}
