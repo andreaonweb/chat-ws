@@ -38,6 +38,7 @@ const GLOBAL_CHAT: Record<string, string> = {
 })
 export class ChatComponent implements AfterViewChecked, OnDestroy {
     @ViewChild('messagesContainer') messagesContainer!: ElementRef;
+    @ViewChild('menuToggleBtn') menuToggleBtn!: ElementRef;
 
     private chatService = inject(ChatService);
     private authService = inject(AuthService);
@@ -58,6 +59,8 @@ export class ChatComponent implements AfterViewChecked, OnDestroy {
     inviteCopied = false;
 
     showMenu = signal(false);
+    menuTop = 0;
+    menuLeft = 0;
     showCategoriesModal = signal(false);
     showJoinModal = signal(false);
     joinCode = '';
@@ -148,11 +151,6 @@ export class ChatComponent implements AfterViewChecked, OnDestroy {
         if (!isAi) {
             this.connectToRoom(room);
         } else {
-            newTab.messages = [{
-                type: 'system',
-                text: '🤖 CHAT CON IA - Preguntame lo que quieras',
-                users: []
-            }];
             newTab.users = [this.username, '🤖 IA'];
         }
 
@@ -315,8 +313,18 @@ export class ChatComponent implements AfterViewChecked, OnDestroy {
         this.username = '';
     }
 
-    toggleMenu() {
-        this.showMenu.update(v => !v);
+    toggleMenu(event?: Event) {
+        if (this.showMenu()) {
+            this.showMenu.set(false);
+            return;
+        }
+        const btn = this.menuToggleBtn?.nativeElement;
+        if (btn) {
+            const rect = btn.getBoundingClientRect();
+            this.menuTop = rect.bottom + 2;
+            this.menuLeft = rect.right - 184;
+        }
+        this.showMenu.set(true);
     }
 
     closeMenu() {

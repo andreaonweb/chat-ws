@@ -206,13 +206,12 @@ $gb-body: #c8c4a0;
 }
 
 /* TABS */
-.gb-tabs {
+.tabs-bar {
     display: flex;
+    align-items: center;
     background: #0a1e0a;
     border-bottom: 2px solid $gb-mid;
-    padding: 0;
     flex-shrink: 0;
-    align-items: stretch;
     position: relative;
     z-index: 2;
 }
@@ -309,11 +308,14 @@ $gb-body: #c8c4a0;
     }
 }
 
+.menu-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 49;
+}
+
 .dropdown-menu {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    margin-top: 0;
+    position: fixed;
     background: $gb-dark;
     border: 2px solid $gb-mid;
     display: flex;
